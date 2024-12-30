@@ -4,8 +4,12 @@ import { useRef } from 'react';
 
 const Countdown = () => {
 
+  const workTime = 25 * 60 * 1000;
+  const restTime = 5 * 60 * 1000;
+
   //作業時間（25分）からカウントダウンを始める
-  const [remainingTimeMs, setRemainingTimeMs] = useState(25 * 60 * 1000);
+  const [remainingTimeMs, setRemainingTimeMs] = useState(workTime);
+  const [isWorkMode, setIsWorkMode] = useState(true);
   const timerRef = useRef(0);
 
   const startTimer = () => {
@@ -20,8 +24,17 @@ const Countdown = () => {
   useEffect(() => {
     if (remainingTimeMs === 0) {
       finish_sound.play();
+
+      //稼働中のタイマーを停止する
       clearInterval(timerRef.current);
-      setRemainingTimeMs(5 * 60 * 1000);
+
+      //次のタイマーの時間を設定する
+      const nextTimeMs = isWorkMode ? restTime : workTime;
+      setRemainingTimeMs(nextTimeMs);
+
+      //作業フラグを切り替える
+      setIsWorkMode((prev) => !prev);
+
       startTimer();
     };
   },[remainingTimeMs]);
@@ -29,6 +42,7 @@ const Countdown = () => {
   return (
     <div className="Countdown">
       <p>{ remainingTimeMs }</p>
+      <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
       <button onClick={startTimer}>スタート</button>
     </div>
   );
