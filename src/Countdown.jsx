@@ -19,6 +19,10 @@ const Countdown = () => {
     timerRef.current = timerId;
   };
 
+  const stopTimer = () => {
+    clearInterval(timerRef.current)
+  };
+
   const finish_sound = new Audio("/finish_whistle.wav");
 
   useEffect(() => {
