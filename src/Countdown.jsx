@@ -12,7 +12,10 @@ const Countdown = () => {
   };
 
   return (
-    <p></p>
+    <div className="Countdown">
+      <p>{ remainingTimeMs }</p>
+      <button onClick={startTimer}>スタート</button>
+    </div>
   );
 };
 
