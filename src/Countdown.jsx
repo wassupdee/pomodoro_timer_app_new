@@ -54,6 +54,7 @@ const Countdown = () => {
       <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
       <button onClick={startTimer}>スタート</button>
       <button onClick={stopTimer}>ストップ</button>
+      <button onClick={resetTimer}>リセット</button>
     </div>
   );
 };
