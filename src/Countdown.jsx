@@ -21,6 +21,8 @@ const Countdown = () => {
     if (remainingTimeMs === 0) {
       finish_sound.play();
       clearInterval(timerRef.current);
+      setRemainingTimeMs(5 * 60 * 1000);
+      startTimer();
     };
   },[remainingTimeMs]);
 
