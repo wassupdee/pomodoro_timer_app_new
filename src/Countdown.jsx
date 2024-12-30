@@ -23,6 +23,11 @@ const Countdown = () => {
     clearInterval(timerRef.current)
   };
 
+  const resetTimer = () => {
+    clearInterval(timerRef.current)
+    setRemainingTimeMs(workTime);
+  };
+
   const finish_sound = new Audio("/finish_whistle.wav");
 
   useEffect(() => {
