@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Countdown = () => {
 
@@ -12,6 +13,12 @@ const Countdown = () => {
   };
 
   const finish_sound = new Audio("/finish_whistle.wav");
+
+  useEffect(() => {
+    if (remainingTimeMs === 0) {
+      finish_sound.play();
+    };
+  },[remainingTimeMs]);
 
   return (
     <div className="Countdown">
