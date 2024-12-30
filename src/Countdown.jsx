@@ -20,6 +20,7 @@ const Countdown = () => {
   useEffect(() => {
     if (remainingTimeMs === 0) {
       finish_sound.play();
+      clearInterval(timerRef.current);
     };
   },[remainingTimeMs]);
 
