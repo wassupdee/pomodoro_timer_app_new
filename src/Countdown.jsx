@@ -9,6 +9,7 @@ const Countdown = () => {
 
   //作業時間（25分）からカウントダウンを始める
   const [remainingTimeMs, setRemainingTimeMs] = useState(workTime);
+  const [isWorkMode, setIsWorkMode] = useState(true);
   const timerRef = useRef(0);
 
   const startTimer = () => {
@@ -32,6 +33,7 @@ const Countdown = () => {
   return (
     <div className="Countdown">
       <p>{ remainingTimeMs }</p>
+      <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
       <button onClick={startTimer}>スタート</button>
     </div>
   );
