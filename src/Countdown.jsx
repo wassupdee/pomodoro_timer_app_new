@@ -11,6 +11,8 @@ const Countdown = () => {
     }, 1000);
   };
 
+  const finish_sound = new Audio("/finish_whistle.wav");
+
   return (
     <div className="Countdown">
       <p>{ remainingTimeMs }</p>
