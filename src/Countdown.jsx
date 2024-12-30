@@ -19,6 +19,10 @@ const Countdown = () => {
     timerRef.current = timerId;
   };
 
+  const stopTimer = () => {
+    clearInterval(timerRef.current)
+  };
+
   const finish_sound = new Audio("/finish_whistle.wav");
 
   useEffect(() => {
@@ -44,6 +48,7 @@ const Countdown = () => {
       <p>{ remainingTimeMs }</p>
       <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
       <button onClick={startTimer}>スタート</button>
+      <button onClick={stopTimer}>ストップ</button>
     </div>
   );
 };
