@@ -24,6 +24,8 @@ const Countdown = () => {
   useEffect(() => {
     if (remainingTimeMs === 0) {
       finish_sound.play();
+
+      //稼働中のタイマーを停止する
       clearInterval(timerRef.current);
 
       //次のタイマーの時間を設定する
