@@ -66,11 +66,11 @@ const Countdown = () => {
     clearInterval(timerRef.current);
 
     // 次のタイマー時間を設定
-    const nextTime = isWorkMode ? restTime : workTime;
+    const nextTime = countdownMode === MODES.WORK ? restTime : workTime;
     setRemainingTimeMs(nextTime);
 
     // 作業か休憩の終了に応じてチャイムを鳴らす
-    const soundToPlay = isWorkMode ? sound.finishWork : sound.finishRest;
+    const soundToPlay = countdownMode === MODES.WORK ? sound.finishWork : sound.finishRest;
     soundToPlay.play();
 
     startTimer();
