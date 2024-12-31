@@ -80,7 +80,13 @@ const Countdown = () => {
   return (
     <div className="Countdown">
       <p>{ formattedMins } : { formattedSecs  }</p>
-      <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
+      <p>
+        {countdownMode === MODES.WORK
+          ? "作業中"
+          : countdownMode === MODES.REST
+          ? "休憩中"
+          : null}
+      </p>
       <button onClick={startTimer} disabled={ isCountingDown }>スタート</button>
       <button onClick={stopTimer}>ストップ</button>
       <button onClick={resetTimer}>リセット</button>
