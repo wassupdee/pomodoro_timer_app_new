@@ -21,6 +21,9 @@ const Countdown = () => {
   //カウントダウンタイマーのIDを保持する
   const timerRef = useRef(0);
 
+  //カウントダウン実行中のフラグ(実行中はスタートボタンを無効化するため)
+  const [isCountingDown, setIsCountingDown] = useState(false);
+
   //カウントダウン終了時のチャイム
   const sound = {
     finishWork: new Audio("/finishWorkWhistle.wav"),
@@ -33,15 +36,18 @@ const Countdown = () => {
       setRemainingTimeMs((prev) => prev - 1000)
     }, 1000);
     timerRef.current = timerId;
+    setIsCountingDown(true);
   };
 
   const stopTimer = () => {
-    clearInterval(timerRef.current)
+    clearInterval(timerRef.current);
+    setIsCountingDown(false);
   };
 
   const resetTimer = () => {
     clearInterval(timerRef.current)
     setRemainingTimeMs(workTime);
+    setIsCountingDown(false);
   };
 
   //カウントダウン終了時の処理
@@ -71,7 +77,7 @@ const Countdown = () => {
     <div className="Countdown">
       <p>{ formattedMins } : { formattedSecs  }</p>
       <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
-      <button onClick={startTimer}>スタート</button>
+      <button onClick={startTimer} disabled={ isCountingDown }>スタート</button>
       <button onClick={stopTimer}>ストップ</button>
       <button onClick={resetTimer}>リセット</button>
     </div>
