@@ -36,24 +36,25 @@ const Countdown = () => {
   };
 
   useEffect(() => {
-    if (remainingTimeMs === 0) {
+    //残り時間が0の時だけ、処理を行う
+    if (remainingTimeMs !== 0) return;
 
-      //稼働中のタイマーを停止する
-      clearInterval(timerRef.current);
+    //稼働中のタイマーを停止する
+    clearInterval(timerRef.current);
 
-      // 次のタイマー時間を設定
-      const nextTime = isWorkMode ? restTime : workTime;
-      setRemainingTimeMs(nextTime);
+    // 次のタイマー時間を設定
+    const nextTime = isWorkMode ? restTime : workTime;
+    setRemainingTimeMs(nextTime);
 
-      // 作業か休憩の終了に応じてチャイムを鳴らす
-      const soundToPlay = isWorkMode ? sound.finishWork : sound.finishRest;
-      soundToPlay.play();
+    // 作業か休憩の終了に応じてチャイムを鳴らす
+    const soundToPlay = isWorkMode ? sound.finishWork : sound.finishRest;
+    soundToPlay.play();
 
-      //作業フラグを切り替える
-      setIsWorkMode((prev) => !prev);
+    //作業フラグを切り替える
+    setIsWorkMode((prev) => !prev);
 
-      startTimer();
-    };
+    startTimer();
+
   },[remainingTimeMs]);
 
   return (
