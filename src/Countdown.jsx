@@ -54,6 +54,7 @@ const Countdown = () => {
     clearInterval(timerRef.current)
     setRemainingTimeMs(workTime);
     setIsCountingDown(false);
+    setCountdownMode(MODES.INACTIVE);
   };
 
   //カウントダウン終了時の処理
