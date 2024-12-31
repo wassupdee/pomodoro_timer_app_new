@@ -32,7 +32,7 @@ const Countdown = () => {
 
   const sound = {
     finishWork: new Audio("/finishWorkWhistle.wav"),
-    finishRest: new Audio("/finishRestWhistle.wav")
+    finishRest: new Audio("/finishRestChime.wav")
   };
 
   useEffect(() => {
