@@ -16,7 +16,12 @@ const Countdown = () => {
   const formattedMins = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
   const formattedSecs = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
 
-  const [isWorkMode, setIsWorkMode] = useState(true);
+  const MODES = {
+    INACTIVE: "inactive",
+    WORK: "work",
+    REST: "rest",
+  };
+  const [countdownMode, setCountdownMode] = useState(MODES.INACTIVE);
 
   //カウントダウンタイマーのIDを保持する
   const timerRef = useRef(0);
@@ -37,6 +42,7 @@ const Countdown = () => {
     }, 1000);
     timerRef.current = timerId;
     setIsCountingDown(true);
+    setCountdownMode((prev) => prev !== MODES.WORK ? MODES.WORK : MODES.REST);
   };
 
   const stopTimer = () => {
@@ -48,6 +54,7 @@ const Countdown = () => {
     clearInterval(timerRef.current)
     setRemainingTimeMs(workTime);
     setIsCountingDown(false);
+    setCountdownMode(MODES.INACTIVE);
   };
 
   //カウントダウン終了時の処理
@@ -59,15 +66,12 @@ const Countdown = () => {
     clearInterval(timerRef.current);
 
     // 次のタイマー時間を設定
-    const nextTime = isWorkMode ? restTime : workTime;
+    const nextTime = countdownMode === MODES.WORK ? restTime : workTime;
     setRemainingTimeMs(nextTime);
 
     // 作業か休憩の終了に応じてチャイムを鳴らす
-    const soundToPlay = isWorkMode ? sound.finishWork : sound.finishRest;
+    const soundToPlay = countdownMode === MODES.WORK ? sound.finishWork : sound.finishRest;
     soundToPlay.play();
-
-    //作業フラグを切り替える
-    setIsWorkMode((prev) => !prev);
 
     startTimer();
 
@@ -76,7 +80,13 @@ const Countdown = () => {
   return (
     <div className="Countdown">
       <p>{ formattedMins } : { formattedSecs  }</p>
-      <p>{ isWorkMode ? '作業中' : '休憩中' }</p>
+      <p>
+        {countdownMode === MODES.WORK
+          ? "作業中"
+          : countdownMode === MODES.REST
+          ? "休憩中"
+          : null}
+      </p>
       <button onClick={startTimer} disabled={ isCountingDown }>スタート</button>
       <button onClick={stopTimer}>ストップ</button>
       <button onClick={resetTimer}>リセット</button>
