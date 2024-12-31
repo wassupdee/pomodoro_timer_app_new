@@ -42,6 +42,7 @@ const Countdown = () => {
     }, 1000);
     timerRef.current = timerId;
     setIsCountingDown(true);
+    setCountdownMode((prev) => prev !== MODES.WORK ? MODES.WORK : MODES.REST);
   };
 
   const stopTimer = () => {
