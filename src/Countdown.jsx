@@ -16,7 +16,12 @@ const Countdown = () => {
   const formattedMins = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
   const formattedSecs = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
 
-  const [isWorkMode, setIsWorkMode] = useState(true);
+  const MODES = {
+    INACTIVE: "inactive",
+    WORK: "work",
+    REST: "rest",
+  };
+  const [countdownMode, setCountdownMode] = useState(MODES.INACTIVE);
 
   //カウントダウンタイマーのIDを保持する
   const timerRef = useRef(0);
