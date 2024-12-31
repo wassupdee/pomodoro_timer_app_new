@@ -28,8 +28,6 @@ const Countdown = () => {
     setRemainingTimeMs(workTime);
   };
 
-  // const finish_sound = new Audio("/finish_whistle.wav");
-
   const sound = {
     finishWork: new Audio("/finishWorkWhistle.wav"),
     finishRest: new Audio("/finishRestChime.wav")
