@@ -73,9 +73,6 @@ const Countdown = () => {
     const soundToPlay = isWorkMode ? sound.finishWork : sound.finishRest;
     soundToPlay.play();
 
-    //作業フラグを切り替える
-    setIsWorkMode((prev) => !prev);
-
     startTimer();
 
   },[remainingTimeMs]);
