@@ -28,7 +28,12 @@ const Countdown = () => {
     setRemainingTimeMs(workTime);
   };
 
-  const finish_sound = new Audio("/finish_whistle.wav");
+  // const finish_sound = new Audio("/finish_whistle.wav");
+
+  const sound = {
+    finishWork: new Audio("/finishWorkWhistle.wav"),
+    finishRest: new Audio("/finishRestWhistle.wav")
+  };
 
   useEffect(() => {
     if (remainingTimeMs === 0) {
