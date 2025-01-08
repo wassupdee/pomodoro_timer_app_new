@@ -102,6 +102,10 @@ GEM
       bcrypt (~> 3.0)
       devise (> 3.5.2, < 5)
       rails (>= 4.2.0, < 8.1)
+    dotenv (3.1.7)
+    dotenv-rails (3.1.7)
+      dotenv (= 3.1.7)
+      railties (>= 6.1)
     drb (2.2.1)
     error_highlight (0.7.0)
     erubi (1.13.1)
@@ -237,6 +241,7 @@ DEPENDENCIES
   debug
   devise
   devise_token_auth
+  dotenv-rails
   error_highlight (>= 0.4.0)
   pg (~> 1.1)
   puma (>= 5.0)
