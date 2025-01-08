@@ -6,10 +6,8 @@ Rails.application.routes.draw do
     }
 
     # ログインユーザー情報の取得
-    namespace :v1 do
-      namespace :auth do
-        resources :sessions, only: %i[index]
-      end
+    namespace :auth do
+      resources :sessions, only: %i[index]
     end
   end
 end
