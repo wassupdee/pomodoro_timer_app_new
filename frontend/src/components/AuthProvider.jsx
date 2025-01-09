@@ -12,6 +12,35 @@ const AuthProvider = ( {children} ) => {
   const [loading, setLoading] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
+  // サインアップ機能
+  const signUp = async (email, password, passwordConfirmation, confirmSuccessUrl) => {
+    const params = {
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      confirmSuccessUrl: confirmSuccessUrl,
+    };
+    setLoading(true);
+
+    try {
+      const res = await client.post("v1/auth", params);
+      if (res.status === 200) {
+        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_client", res.headers["client"]);
+        Cookies.set("_uid", res.headers["uid"]);
+
+        setIsSignedIn(true);
+        setUser(res.data.data);
+        return true;
+      }
+    } catch (e) {
+      // サインアップ失敗時の通知は別途実装する
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // サインイン機能
   const signIn = async (email, password) => {
     const params = {
@@ -69,7 +98,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   );
