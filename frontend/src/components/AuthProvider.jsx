@@ -12,7 +12,7 @@ const AuthProvider = ( {children} ) => {
   const [loading, setLoading] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-// サインイン機能
+  // サインイン機能
   const signIn = async (email, password) => {
     const params = {
       email: email,
@@ -39,8 +39,37 @@ const AuthProvider = ( {children} ) => {
     }
   };
 
+  // サインアウト機能
+  const signOut = async () => {
+    setLoading(true);
+
+    try {
+      console.log(Cookies.get("_access_token"));
+      console.log(Cookies.get("_client"),);
+      console.log(Cookies.get("_uid"));
+      const res = await client.delete("v1/auth/sign_out", {
+        headers: {
+          "access-token": Cookies.get("_access_token"),
+          client: Cookies.get("_client"),
+          uid: Cookies.get("_uid"),
+        },
+      });
+
+      if (res.status === 200) {
+        setIsSignedIn(false);
+        setUser("");
+        return true;
+      }
+    } catch (e) {
+      // サインアウト失敗時の通知は別途実装する
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn }}>
+    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
