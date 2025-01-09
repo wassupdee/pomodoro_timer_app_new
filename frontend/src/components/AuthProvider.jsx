@@ -13,7 +13,7 @@ const AuthProvider = ( {children} ) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
 // サインイン機能
-  const signin = async (email, password) => {
+  const signIn = async (email, password) => {
     const params = {
       email: email,
       password: password,
@@ -40,7 +40,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, signin }}>
+    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn }}>
       {children}
     </AuthContext.Provider>
   );

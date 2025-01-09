@@ -4,13 +4,13 @@ import { useAuth } from "./AuthProvider";
 
 // サインインページを担当する（サインイン機能はAuthProviderから受けとる）
 export const SignIn = () => {
-  const { signin } = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
-    const success = await signin(email, password);
+    const success = await signIn(email, password);
 
     if (success) {
       // サインイン成功時の通知、及びリダイレクトは別途実装する
