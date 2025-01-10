@@ -34,7 +34,7 @@ const AuthProvider = ( {children} ) => {
         return true;
       }
     } catch (e) {
-      // サインアップ失敗時の通知は別途実装する
+      alert("サインアップに失敗しました")
       console.log(e);
     } finally {
       setLoading(false);
@@ -61,7 +61,7 @@ const AuthProvider = ( {children} ) => {
         return true;
       }
     } catch (e) {
-      // サインイン失敗時の通知は別途実装する
+      alert("サインインに失敗しました")
       console.log(e);
     } finally {
       setLoading(false);
@@ -90,7 +90,7 @@ const AuthProvider = ( {children} ) => {
         return true;
       }
     } catch (e) {
-      // サインアウト失敗時の通知は別途実装する
+      alert("サインアウトに失敗しました")
       console.log(e);
     } finally {
       setLoading(false);
