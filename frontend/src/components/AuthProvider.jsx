@@ -15,10 +15,10 @@ const AuthProvider = ( {children} ) => {
   // サインアップ機能
   const signUp = async (email, password, passwordConfirmation, confirmSuccessUrl) => {
     const params = {
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-      confirmSuccessUrl: confirmSuccessUrl,
+      email,
+      password,
+      passwordConfirmation,
+      confirmSuccessUrl,
     };
     setLoading(true);
 
@@ -44,8 +44,8 @@ const AuthProvider = ( {children} ) => {
   // サインイン機能
   const signIn = async (email, password) => {
     const params = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
     setLoading(true);
 
