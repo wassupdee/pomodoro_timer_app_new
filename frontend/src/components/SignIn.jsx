@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
 
@@ -8,13 +8,17 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     const success = await signIn(email, password);
 
+    // この時点ではまだ、user stateはnullのまま
+
     if (success) {
       // サインイン成功時の通知、及びリダイレクトは別途実装する
       console.log("Sign-in success");
+      navigate("/");
     } else {
       // サインイン失敗時の通知は別途実装する
       console.log("Sign-in failed");
