@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Countdown from './Countdown';
 import { useAuth } from "./AuthProvider";
@@ -5,7 +6,12 @@ import SignOut from "./SignOut";
 
 
 const Home = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, getCurrentUser } = useAuth();
+
+  useEffect(() => {
+    getCurrentUser();
+  },[isSignedIn])
+
   return (
     <>
       <Countdown />

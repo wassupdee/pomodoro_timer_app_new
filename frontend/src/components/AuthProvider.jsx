@@ -11,6 +11,7 @@ const AuthProvider = ( {children} ) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  // const [currentUser, setCurrentUser] = useState();
 
   // サインアップ機能
   const signUp = async (email, password, passwordConfirmation, confirmSuccessUrl) => {
@@ -99,8 +100,41 @@ const AuthProvider = ( {children} ) => {
     }
   };
 
+  // ログインユーザーの取得
+  const getCurrentUser = async () => {
+    setLoading(true);
+
+    if (
+      !Cookies.get("_access_token") ||
+      !Cookies.get("_client") ||
+      !Cookies.get("_uid")
+    )
+      return;
+
+    try {
+      const res = await client.get("v1/auth/sessions", {
+        headers: {
+          "access-token": Cookies.get("_access_token"),
+          client: Cookies.get("_client"),
+          uid: Cookies.get("_uid"),
+        },
+      });
+      if (res?.data.isLogin === true) {
+        setIsSignedIn(true);
+        // setCurrentUser(res?.data.data);
+        console.log(res?.data.data);
+      } else {
+        console.log(res?.data.data);
+        console.log("no current user");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut, signUp }}>
+    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut, signUp, getCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );
