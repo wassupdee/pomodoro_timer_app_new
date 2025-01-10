@@ -13,6 +13,7 @@ export const SignOut = () => {
 
     if (success) {
       console.log("Sign-out success");
+      alert("サインアウトしました")
       navigate("/");
     };
   };
