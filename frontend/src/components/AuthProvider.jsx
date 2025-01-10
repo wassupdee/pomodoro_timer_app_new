@@ -31,6 +31,8 @@ const AuthProvider = ( {children} ) => {
 
         setIsSignedIn(true);
         setUser(res.data.data);
+        alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください")
+        alert("サインアップ後は、サインインをしてください")
         return true;
       }
     } catch (e) {

@@ -15,12 +15,8 @@ export const SignUp = () => {
     const success = await signUp(email, password, passwordConfirmation, confirmSuccessUrl);
 
     if (success) {
-      // サインアップ成功時の通知、及びリダイレクトは別途実装する
-      console.log("Sign-up success");
-    } else {
-      // サインアップ失敗時の通知は別途実装する
-      console.log("Sign-up failed");
-    }
+      console.log("ユーザー仮登録 success");
+    };
   };
 
   return (
