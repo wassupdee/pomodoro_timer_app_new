@@ -17,6 +17,7 @@ export const SignIn = () => {
 
     if (success) {
       console.log("Sign-in success");
+      alert("サインインしました")
       navigate("/");
     }
   };
