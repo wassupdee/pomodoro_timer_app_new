@@ -28,6 +28,6 @@ class V1::TimerRecordsController < ApplicationController
   private
 
   def timer_record_params
-    params.permit(:study_time_ms, :rest_time_ms)
+    params.permit(:work_time_elapsed_ms, :rest_time_elapsed_ms)
   end
 end

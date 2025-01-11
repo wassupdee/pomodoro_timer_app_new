@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_11_030636) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_11_060108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "timer_records", force: :cascade do |t|
-    t.integer "study_time_ms"
-    t.integer "rest_time_ms"
+    t.integer "work_time_elapsed_ms"
+    t.integer "rest_time_elapsed_ms"
     t.date "recorded_date"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
