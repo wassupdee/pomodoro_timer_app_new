@@ -33,14 +33,21 @@ const Countdown = () => {
     finishRest: new Audio("/finishRestChime.wav")
   };
 
+  const changeMode = () => {
+    setCountdownMode(countdownMode === MODES.WORK ? MODES.REST : MODES.WORK)
+  };
+
   //タイマー機能(開始、停止、リセット)
   const startTimer = () => {
+    if (countdownMode === MODES.INACTIVE) return;
+
+    setRemainingTimeMs(countdownMode === MODES.WORK ? workTime : restTime)
     const timerId = setInterval(() => {
-      setRemainingTimeMs((prev) => prev - 1000)
+      setRemainingTimeMs((prev) => prev - 1000);
     }, 1000);
+
     timerRef.current = timerId;
     setIsCountingDown(true);
-    setCountdownMode((prev) => prev !== MODES.WORK ? MODES.WORK : MODES.REST);
   };
 
   const stopTimer = () => {
@@ -63,17 +70,18 @@ const Countdown = () => {
     //稼働中のタイマーを停止する
     clearInterval(timerRef.current);
 
-    // 次のタイマー時間を設定
-    const nextTime = countdownMode === MODES.WORK ? restTime : workTime;
-    setRemainingTimeMs(nextTime);
+    // 次のカウントダウンモードを設定
+    changeMode();
 
-    // 作業か休憩の終了に応じてチャイムを鳴らす
+    // 作業、または休憩の終了に応じてチャイムを鳴らす
     const soundToPlay = countdownMode === MODES.WORK ? sound.finishWork : sound.finishRest;
     soundToPlay.play();
 
-    startTimer();
-
   },[remainingTimeMs]);
+
+  useEffect(()=>{
+    startTimer();
+  },[countdownMode]);
 
   return (
     <div className="Countdown">
@@ -85,7 +93,7 @@ const Countdown = () => {
           ? "休憩中"
           : null}
       </p>
-      <button onClick={startTimer} disabled={ isCountingDown }>スタート</button>
+      <button onClick={changeMode} disabled={ isCountingDown }>スタート</button>
       <button onClick={stopTimer}>ストップ</button>
       <button onClick={resetTimer}>リセット</button>
     </div>
