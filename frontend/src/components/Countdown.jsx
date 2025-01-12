@@ -10,6 +10,10 @@ const Countdown = () => {
   const remainingTimeMins = Math.floor(remainingTimeMs / 1000 / 60);
   const remainingTimeSecs = Math.floor(remainingTimeMs / 1000 % 60);
 
+  //経過時間を保持する変数
+  const [workTimeElapsedMs, setWorkTimeElapsedMs] = useState(0);
+  const [restTimeElapsedMs, setRestTimeElapsedMs] = useState(0);
+
   //２桁で時間表示する
   const formattedMins = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
   const formattedSecs = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
@@ -44,6 +48,7 @@ const Countdown = () => {
     setRemainingTimeMs(countdownMode === MODES.WORK ? workTime : restTime)
     const timerId = setInterval(() => {
       setRemainingTimeMs((prev) => prev - 1000);
+      countdownMode === MODES.WORK ? setWorkTimeElapsedMs((prev) => prev + 1000) : setRestTimeElapsedMs((prev) => prev + 1000);
     }, 1000);
 
     timerRef.current = timerId;
