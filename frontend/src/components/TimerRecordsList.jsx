@@ -1,7 +1,7 @@
 import client from "../api/apiClient";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TimerRecordsList = () => {
 
@@ -50,8 +50,6 @@ const TimerRecordsList = () => {
     return `${year}年${month}月${day}日`; // フォーマットされた日付
   };
 
-  const navigate = useNavigate();
-
   return (
     <div>
       {timerRecords ? (
@@ -74,7 +72,7 @@ const TimerRecordsList = () => {
               ))}
             </tbody>
           </table>
-          <button onClick={() => navigate("/")}>ホーム</button>
+          <Link to="/">ホーム</Link>
         </>
       ) : (
         ""
