@@ -86,6 +86,10 @@ const Countdown = () => {
   const stopTimer = () => {
     clearInterval(timerRef.current);
     setIsCountingDown(false);
+
+    saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
+    setWorkTimeElapsedMs(0);
+    setRestTimeElapsedMs(0);
   };
 
   //----------リセット----------
@@ -94,6 +98,10 @@ const Countdown = () => {
     setRemainingTimeMs(workTime);
     setIsCountingDown(false);
     setCountdownMode(MODES.INACTIVE);
+
+    saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
+    setWorkTimeElapsedMs(0);
+    setRestTimeElapsedMs(0);
   };
 
   //----------カウントダウン終了時の処理----------
