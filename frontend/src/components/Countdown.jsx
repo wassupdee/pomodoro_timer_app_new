@@ -67,6 +67,20 @@ const Countdown = () => {
     setIsCountingDown(false);
     setCountdownMode(MODES.INACTIVE);
   };
+  //----------再開----------
+  const restartTimer = () => {
+    if (countdownMode === MODES.INACTIVE) return;
+
+    //時間は初期化しない（ストップした時点から計測を再開するため）
+
+    const timerId = setInterval(() => {
+      setRemainingTimeMs((prev) => prev - 1000);
+      countdownMode === MODES.WORK ? setWorkTimeElapsedMs((prev) => prev + 1000) : setRestTimeElapsedMs((prev) => prev + 1000);
+    }, 1000);
+
+    timerRef.current = timerId;
+    setIsCountingDown(true);
+  }
 
   //カウントダウン終了時の処理
   useEffect(() => {
