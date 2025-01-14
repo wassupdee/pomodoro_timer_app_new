@@ -84,6 +84,15 @@ const Countdown = () => {
 
   },[remainingTimeMs]);
 
+  //1分ごとにAPIに経過時間を送信し、経過時間の状態をリセット
+  useEffect(()=>{
+    if (remainingTimeMs % (60 * 1000) === 0){
+      saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
+      setWorkTimeElapsedMs(0);
+      setRestTimeElapsedMs(0);
+    };
+  },[remainingTimeMs])
+
   useEffect(()=>{
     startTimer();
   },[countdownMode]);
