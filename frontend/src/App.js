@@ -5,6 +5,7 @@ import SignIn from './components/SignIn';
 import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
+import TimerRecordsList from './components/TimerRecordsList';
 // import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/timer_records" element={<TimerRecordsList />} />
           </Routes>
         </Router>
       </AuthProvider>
