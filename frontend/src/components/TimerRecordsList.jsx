@@ -55,28 +55,30 @@ const TimerRecordsList = () => {
   return (
     <div>
       {timerRecords ? (
-        <table>
-          <thead>
-            <tr>
-              <th>日付</th>
-              <th>作業時間（分）</th>
-              <th>休憩時間（分）</th>
-            </tr>
-          </thead>
-          <tbody>
-            {timerRecords.map((timerRecord, index) => (
-              <tr key={index}>
-                <td>{formatDateToJapanese(timerRecord.recordedDate)}</td>
-                <td>{Math.floor(timerRecord.workTimeElapsedMs / 1000 / 60)}分</td>
-                <td>{Math.floor(timerRecord.restTimeElapsedMs / 1000 / 60)}分</td>
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>作業時間（分）</th>
+                <th>休憩時間（分）</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {timerRecords.map((timerRecord, index) => (
+                <tr key={index}>
+                  <td>{formatDateToJapanese(timerRecord.recordedDate)}</td>
+                  <td>{Math.floor(timerRecord.workTimeElapsedMs / 1000 / 60)}分</td>
+                  <td>{Math.floor(timerRecord.restTimeElapsedMs / 1000 / 60)}分</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={() => navigate("/")}>ホーム</button>
+        </>
       ) : (
         ""
       )}
-      <button onClick={() => navigate("/")}>ホーム</button>
     </div>
   );
 }
