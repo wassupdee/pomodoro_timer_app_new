@@ -16,6 +16,11 @@ const Countdown = () => {
   const [workTimeElapsedMs, setWorkTimeElapsedMs] = useState(0);
   const [restTimeElapsedMs, setRestTimeElapsedMs] = useState(0);
 
+  //経過時間をリセットする
+  const resetTimeElapsedMs = () => {
+    setWorkTimeElapsedMs(0);
+    setRestTimeElapsedMs(0);
+  };
 
   //----------計測モード----------
   const MODES = {
@@ -88,8 +93,7 @@ const Countdown = () => {
     setIsCountingDown(false);
 
     saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
-    setWorkTimeElapsedMs(0);
-    setRestTimeElapsedMs(0);
+    resetTimeElapsedMs();
   };
 
   //----------リセット----------
@@ -100,8 +104,7 @@ const Countdown = () => {
     setCountdownMode(MODES.INACTIVE);
 
     saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
-    setWorkTimeElapsedMs(0);
-    setRestTimeElapsedMs(0);
+    resetTimeElapsedMs();
   };
 
   //----------カウントダウン終了時の処理----------
@@ -126,8 +129,7 @@ const Countdown = () => {
   useEffect(()=>{
     if (remainingTimeMs % (60 * 1000) === 0){
       saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
-      setWorkTimeElapsedMs(0);
-      setRestTimeElapsedMs(0);
+      resetTimeElapsedMs();
     };
   },[remainingTimeMs])
 
