@@ -2,6 +2,11 @@ class V1::TimerRecordsController < ApplicationController
   before_action :authenticate_v1_user!
   before_action :find_today_timer_record, only: [:create_or_update]
 
+  def index
+    timer_records = current_v1_user.timer_records
+    render json: { user: current_v1_user, data: timer_records }
+  end
+
   def create_or_update
     # 日付が一致するレコードがあれば更新する。なければ、新しくレコードをつくる
     if @today_timer_record
