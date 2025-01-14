@@ -74,7 +74,7 @@ const TimerRecordsList = () => {
           </tbody>
         </table>
       ) : (
-        "Loading..."
+        ""
       )}
       <button onClick={() => navigate("/")}>ホーム</button>
     </div>
