@@ -121,7 +121,7 @@ const AuthProvider = ( {children} ) => {
       });
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
-        // setCurrentUser(res?.data.data);
+        setUser(res?.data.data);
         console.log(res?.data.data);
       } else {
         console.log(res?.data.data);

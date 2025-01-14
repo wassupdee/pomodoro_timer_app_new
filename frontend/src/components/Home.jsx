@@ -16,7 +16,10 @@ const Home = () => {
     <>
       <Countdown />
       { isSignedIn ? (
-        <SignOut/>
+        <>
+          <SignOut/>
+          <Link to="/timer_records">記録ページ</Link>
+        </>
       ) : (
         <>
           <Link to="/signin">サインイン</Link>

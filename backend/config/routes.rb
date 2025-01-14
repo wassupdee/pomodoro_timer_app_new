@@ -11,5 +11,6 @@ Rails.application.routes.draw do
     end
 
     post 'timer_records', to: 'timer_records#create_or_update'
+    resources :timer_records, only: %i[index]
   end
 end
