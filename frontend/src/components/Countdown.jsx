@@ -122,7 +122,20 @@ const Countdown = () => {
           ? "休憩中"
           : null}
       </p>
-      <button onClick={changeMode} disabled={ isCountingDown }>スタート</button>
+
+      {/* countdownModeがinactiveであれば、changeModeを実行し、startTimer関数を発火させる。
+          workまたはrestであればすでにスタート済みなので、restart関数を発火させる（ただし、isCountingDownがtrueの時は非表示にする） */}
+      {
+        countdownMode === MODES.INACTIVE ? (
+          <button onClick={changeMode}>
+            スタート
+          </button>
+        ) : (
+          <button onClick={restartTimer} hidden={ isCountingDown }>
+            リスタート
+          </button>
+        )
+      }
       <button onClick={stopTimer}>ストップ</button>
       <button onClick={resetTimer}>リセット</button>
     </div>
