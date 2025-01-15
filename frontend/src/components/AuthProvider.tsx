@@ -1,20 +1,64 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import Cookies from "js-cookie";
 import client from "../api/apiClient";
 
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  isSignedIn: boolean;
+  signIn: (args: SignInArg) => Promise<boolean | void>;
+  signOut: () => Promise<boolean | void>;
+  signUp: (args: SignUpArg) => Promise<boolean | void>;
+  getCurrentUser: () => Promise<void>;
+}
+
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  loading: false,
+  isSignedIn: false,
+  signIn: async () => undefined,
+  signOut: async () => undefined,
+  signUp: async () => undefined,
+  getCurrentUser: async () => undefined,
+};
+
+interface SignUpArg {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  confirmSuccessUrl: string;
+}
+
+interface SignInArg {
+  email: string;
+  password: string;
+}
+
+interface User {
+  allowPasswordChange: boolean;
+  createdAt: string;
+  email: string;
+  id: number;
+  image: string | null;
+  name: string | null;
+  nickname: string | null;
+  provider: string;
+  uid: string;
+  updatedAt: string;
+}
+
 // 認証用のContextを作成
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 // 認証用のコンポーネント（ContextProvider）を作成
 // コンポーネントタグで囲んだ子コンポーネントを受け取れるようにする
-const AuthProvider = ( {children} ) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  // const [currentUser, setCurrentUser] = useState();
+const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   // サインアップ機能
-  const signUp = async (email, password, passwordConfirmation, confirmSuccessUrl) => {
+  const signUp = async ({email, password, passwordConfirmation, confirmSuccessUrl}:SignUpArg): Promise<boolean | void> => {
     const params = {
       email,
       password,
@@ -45,7 +89,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // サインイン機能
-  const signIn = async (email, password) => {
+  const signIn = async ({email, password}:SignInArg): Promise<boolean | void> => {
     const params = {
       email,
       password,
@@ -72,7 +116,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // サインアウト機能
-  const signOut = async () => {
+  const signOut = async (): Promise<boolean | void> => {
     setLoading(true);
 
     try {
@@ -89,7 +133,7 @@ const AuthProvider = ( {children} ) => {
 
       if (res.status === 200) {
         setIsSignedIn(false);
-        setUser("");
+        setUser(null);
         return true;
       }
     } catch (e) {
@@ -101,7 +145,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // ログインユーザーの取得
-  const getCurrentUser = async () => {
+  const getCurrentUser = async (): Promise<void> => {
     setLoading(true);
 
     if (
@@ -141,7 +185,7 @@ const AuthProvider = ( {children} ) => {
 };
 
 // Contextから認証valueを使用するための関数を定義
-export const useAuth = () => {
+export const useAuth = ():AuthContextType => {
   return useContext(AuthContext);
 };
 
