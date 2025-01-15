@@ -1,11 +1,6 @@
 import client from "./apiClient";
 import Cookies from "js-cookie";
-
-interface Headers {
-  "access-token": string | undefined;
-  client: string | undefined;
-  uid: string | undefined;
-}
+import { AxiosRequestConfig } from "axios";
 
 const saveTimerRecord = async (workTimeElapsedMs: number, restTimeElapsedMs: number): Promise<boolean | void> => {
   const params = {
@@ -13,10 +8,10 @@ const saveTimerRecord = async (workTimeElapsedMs: number, restTimeElapsedMs: num
     restTimeElapsedMs,
   };
 
-  const headers: Headers = {
-    "access-token": Cookies.get("_access_token"),
-    client: Cookies.get("_client"),
-    uid: Cookies.get("_uid"),
+  const headers: AxiosRequestConfig["headers"] = {
+    "access-token": Cookies.get("_access_token") || "",
+    client: Cookies.get("_client") || "",
+    uid: Cookies.get("_uid") || "",
   };
 
   try {
