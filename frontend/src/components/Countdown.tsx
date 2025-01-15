@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import saveTimerRecord from '../api/SaveTimerRecord';
+import saveTimerRecord from '../api/saveTimerRecord';
 
 const Countdown = () => {
   //----------時間----------
