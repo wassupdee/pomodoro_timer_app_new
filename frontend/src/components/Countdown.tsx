@@ -143,8 +143,8 @@ const Countdown = () => {
 
   //----------表示関連----------
   //２桁で時間表示する
-  const formattedMins: string | number = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
-  const formattedSecs: string | number = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
+  const formattedMins: string = remainingTimeMins < 10 ? "0" + remainingTimeMins : String(remainingTimeMins);
+  const formattedSecs: string = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : String(remainingTimeSecs);
 
   return (
     <div className="Countdown">
