@@ -96,7 +96,10 @@ const Countdown = () => {
 
   //----------停止----------
   const stopTimer = (): void => {
-    clearInterval(timerRef.current);
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     setIsCountingDown(false);
 
     saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
@@ -105,7 +108,10 @@ const Countdown = () => {
 
   //----------リセット----------
   const resetTimer = (): void => {
-    clearInterval(timerRef.current)
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     setRemainingTimeMs(workTime);
     setIsCountingDown(false);
     setCountdownMode(MODES.INACTIVE);
@@ -120,7 +126,10 @@ const Countdown = () => {
     if (remainingTimeMs !== 0) return;
 
     //稼働中のタイマーを停止する
-    clearInterval(timerRef.current);
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
 
     // 次のカウントダウンモードを設定
     changeMode();
