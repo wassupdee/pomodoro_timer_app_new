@@ -4,20 +4,20 @@ import saveTimerRecord from '../api/SaveTimerRecord';
 const Countdown = () => {
   //----------時間----------
   //作業時間25分、休憩時間5分とする
-  const workTime = 10 * 1000;
-  const restTime = 6 * 1000;
+  const workTime: number = 10 * 1000;
+  const restTime: number = 6 * 1000;
 
   //残り時間を保持する変数
-  const [remainingTimeMs, setRemainingTimeMs] = useState(workTime);
-  const remainingTimeMins = Math.floor(remainingTimeMs / 1000 / 60);
-  const remainingTimeSecs = Math.floor(remainingTimeMs / 1000 % 60);
+  const [remainingTimeMs, setRemainingTimeMs] = useState<number>(workTime);
+  const remainingTimeMins: number = Math.floor(remainingTimeMs / 1000 / 60);
+  const remainingTimeSecs: number = Math.floor(remainingTimeMs / 1000 % 60);
 
   //経過時間を保持する変数
-  const [workTimeElapsedMs, setWorkTimeElapsedMs] = useState(0);
-  const [restTimeElapsedMs, setRestTimeElapsedMs] = useState(0);
+  const [workTimeElapsedMs, setWorkTimeElapsedMs] = useState<number>(0);
+  const [restTimeElapsedMs, setRestTimeElapsedMs] = useState<number>(0);
 
   //経過時間をリセットする
-  const resetTimeElapsedMs = () => {
+  const resetTimeElapsedMs = (): void => {
     setWorkTimeElapsedMs(0);
     setRestTimeElapsedMs(0);
   };
@@ -27,24 +27,31 @@ const Countdown = () => {
     INACTIVE: "inactive",
     WORK: "work",
     REST: "rest",
-  };
+  } as const;
 
-  const [countdownMode, setCountdownMode] = useState(MODES.INACTIVE);
+  type Mode = typeof MODES[keyof typeof MODES];
+
+  const [countdownMode, setCountdownMode] = useState<Mode>(MODES.INACTIVE);
 
   //カウントダウン実行中のフラグ(ボタンの出し分けに使用)
-  const [isCountingDown, setIsCountingDown] = useState(false);
+  const [isCountingDown, setIsCountingDown] = useState<boolean>(false);
 
-  const changeMode = () => {
+  const changeMode = ():void => {
     setCountdownMode(countdownMode === MODES.WORK ? MODES.REST : MODES.WORK)
   };
 
 
   //----------タイマー動作を支える機能関連----------
   //カウントダウンタイマーのIDを保持する
-  const timerRef = useRef(0);
+  const timerRef = useRef<number>(0);
 
   //カウントダウン終了時のチャイム
-  const sounds = {
+  interface Sounds {
+    finishWork: HTMLAudioElement;
+    finishRest: HTMLAudioElement;
+  }
+
+  const sounds: Sounds = {
     finishWork: new Audio("/finishWorkWhistle.wav"),
     finishRest: new Audio("/finishRestChime.wav")
   };
@@ -52,13 +59,13 @@ const Countdown = () => {
 
   //----------タイマー機能----------
   //----------開始----------
-  const startTimer = () => {
+  const startTimer = (): void => {
     if (countdownMode === MODES.INACTIVE) return;
 
     //時間を初期化設定する
     setRemainingTimeMs(countdownMode === MODES.WORK ? workTime : restTime)
 
-    const timerId = setInterval(() => {
+    const timerId: number = window.setInterval((): void => {
       setRemainingTimeMs((prev) => prev - 1000);
       countdownMode === MODES.WORK ? setWorkTimeElapsedMs((prev) => prev + 1000) : setRestTimeElapsedMs((prev) => prev + 1000);
     }, 1000);
@@ -73,12 +80,12 @@ const Countdown = () => {
   },[countdownMode]);
 
   //----------再開----------
-  const restartTimer = () => {
+  const restartTimer = (): void => {
     if (countdownMode === MODES.INACTIVE) return;
 
     //時間は初期化しない（ストップした時点から計測を再開するため）
 
-    const timerId = setInterval(() => {
+    const timerId: number = window.setInterval((): void => {
       setRemainingTimeMs((prev) => prev - 1000);
       countdownMode === MODES.WORK ? setWorkTimeElapsedMs((prev) => prev + 1000) : setRestTimeElapsedMs((prev) => prev + 1000);
     }, 1000);
@@ -88,7 +95,7 @@ const Countdown = () => {
   }
 
   //----------停止----------
-  const stopTimer = () => {
+  const stopTimer = (): void => {
     clearInterval(timerRef.current);
     setIsCountingDown(false);
 
@@ -97,7 +104,7 @@ const Countdown = () => {
   };
 
   //----------リセット----------
-  const resetTimer = () => {
+  const resetTimer = (): void => {
     clearInterval(timerRef.current)
     setRemainingTimeMs(workTime);
     setIsCountingDown(false);
@@ -119,7 +126,7 @@ const Countdown = () => {
     changeMode();
 
     // 作業、または休憩の終了に応じてチャイムを鳴らす
-    const soundToPlay = countdownMode === MODES.WORK ? sounds.finishWork : sounds.finishRest;
+    const soundToPlay: HTMLAudioElement = countdownMode === MODES.WORK ? sounds.finishWork : sounds.finishRest;
     soundToPlay.play();
 
   },[remainingTimeMs]);
@@ -136,12 +143,12 @@ const Countdown = () => {
 
   //----------表示関連----------
   //２桁で時間表示する
-  const formattedMins = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
-  const formattedSecs = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
+  const formattedMins: string | number = remainingTimeMins < 10 ? "0" + remainingTimeMins : remainingTimeMins;
+  const formattedSecs: string | number = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : remainingTimeSecs;
 
   return (
     <div className="Countdown">
-      <p>{ formattedMins } : { formattedSecs  }</p>
+      <p>{ formattedMins } : { formattedSecs }</p>
       <p>
         {countdownMode === MODES.WORK
           ? "作業中"
