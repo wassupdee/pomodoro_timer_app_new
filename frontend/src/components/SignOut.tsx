@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +6,7 @@ export const SignOut = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignOutSubmit = async (e) => {
+  const handleSignOutSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const success = await signOut();
 
@@ -20,8 +19,8 @@ export const SignOut = () => {
 
   return (
     <>
-      <form>
-        <button type="submit" onClick={(e) => handleSignOutSubmit(e)}>
+      <form onSubmit={handleSignOutSubmit}>
+        <button type="submit">
           サインアウト
         </button>
       </form>
