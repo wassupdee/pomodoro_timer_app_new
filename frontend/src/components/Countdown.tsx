@@ -43,7 +43,7 @@ const Countdown = () => {
 
   //----------タイマー動作を支える機能関連----------
   //カウントダウンタイマーのIDを保持する
-  const timerRef = useRef<number>(0);
+  const timerRef = useRef<number | null>(null);
 
   //カウントダウン終了時のチャイム
   interface Sounds {
