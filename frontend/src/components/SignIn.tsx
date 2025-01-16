@@ -11,7 +11,7 @@ export const SignIn = () => {
   const navigate = useNavigate();
   const handleSignInSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signIn({ email, password });
+    const success: boolean | void = await signIn({ email, password });
 
     // この時点ではまだ、user stateはnullのまま
 
