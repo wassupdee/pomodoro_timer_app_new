@@ -53,12 +53,12 @@ const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 // 認証用のコンポーネント（ContextProvider）を作成
 // コンポーネントタグで囲んだ子コンポーネントを受け取れるようにする
 const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<AuthContextType["user"]>(null);
+  const [loading, setLoading] = useState<AuthContextType["loading"]>(false);
+  const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
   // サインアップ機能
-  const signUp = async ({email, password, passwordConfirmation, confirmSuccessUrl}:SignUpArg): Promise<boolean | void> => {
+  const signUp: AuthContextType["signUp"] = async ({email, password, passwordConfirmation, confirmSuccessUrl}) => {
     const params = {
       email,
       password,
@@ -89,7 +89,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   };
 
   // サインイン機能
-  const signIn = async ({email, password}:SignInArg): Promise<boolean | void> => {
+  const signIn: AuthContextType["signIn"] = async ({email, password}) => {
     const params = {
       email,
       password,
@@ -116,7 +116,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   };
 
   // サインアウト機能
-  const signOut = async (): Promise<boolean | void> => {
+  const signOut: AuthContextType["signOut"] = async () => {
     setLoading(true);
 
     try {
@@ -145,7 +145,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   };
 
   // ログインユーザーの取得
-  const getCurrentUser = async (): Promise<void> => {
+  const getCurrentUser: AuthContextType["getCurrentUser"] = async () => {
     setLoading(true);
 
     if (
