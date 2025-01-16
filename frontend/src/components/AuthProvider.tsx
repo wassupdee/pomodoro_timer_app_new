@@ -6,9 +6,9 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isSignedIn: boolean;
+  signUp: (args: SignUpArg) => Promise<boolean | void>;
   signIn: (args: SignInArg) => Promise<boolean | void>;
   signOut: () => Promise<boolean | void>;
-  signUp: (args: SignUpArg) => Promise<boolean | void>;
   getCurrentUser: () => Promise<void>;
 }
 
