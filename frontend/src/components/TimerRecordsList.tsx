@@ -7,6 +7,7 @@ import { AxiosRequestConfig } from "axios";
 const TimerRecordsList = () => {
 
   interface TimerRecord {
+    id: string;
     recordedDate: string;
     workTimeElapsedMs: string;
     restTimeElapsedMs: string;
@@ -70,8 +71,8 @@ const TimerRecordsList = () => {
               </tr>
             </thead>
             <tbody>
-              {timerRecords.map((timerRecord: TimerRecord, index: number) => (
-                <tr key={index}>
+              {timerRecords.map((timerRecord: TimerRecord) => (
+                <tr key={timerRecord.id}>
                   <td>{formatDateToJapanese(timerRecord.recordedDate)}</td>
                   <td>{Math.floor(Number(timerRecord.workTimeElapsedMs) / 1000 / 60)}分</td>
                   <td>{Math.floor(Number(timerRecord.restTimeElapsedMs) / 1000 / 60)}分</td>
