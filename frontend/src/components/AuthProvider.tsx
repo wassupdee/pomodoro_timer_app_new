@@ -70,7 +70,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     try {
       const res = await client.post("v1/auth", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_access_token", res.headers["accessToken"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
 
@@ -99,7 +99,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     try {
       const res = await client.post("v1/auth/sign_in", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_access_token", res.headers["accessToken"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
 
