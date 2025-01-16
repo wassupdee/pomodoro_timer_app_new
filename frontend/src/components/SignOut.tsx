@@ -6,9 +6,9 @@ export const SignOut = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignOutSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignOutSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const success = await signOut();
+    const success: boolean | void = await signOut();
 
     if (success) {
       console.log("Sign-out success");
