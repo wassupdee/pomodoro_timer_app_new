@@ -29,7 +29,9 @@ const Countdown = () => {
     REST: "rest",
   } as const;
 
-  type Mode = typeof MODES[keyof typeof MODES];
+  type ModesType = typeof MODES;
+  type ModesKeys = keyof ModesType;
+  type Mode = ModesType[ModesKeys];
 
   const [countdownMode, setCountdownMode] = useState<Mode>(MODES.INACTIVE);
 
