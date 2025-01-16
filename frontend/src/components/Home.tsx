@@ -4,13 +4,8 @@ import Countdown from './Countdown';
 import { useAuth } from "./AuthProvider";
 import SignOut from "./SignOut";
 
-interface AuthContext {
-  isSignedIn: boolean;
-  getCurrentUser: () => void;
-}
-
 const Home = () => {
-  const { isSignedIn, getCurrentUser } = useAuth<AuthContext>();
+  const { isSignedIn, getCurrentUser } = useAuth();
 
   useEffect(() => {
     getCurrentUser();
