@@ -12,15 +12,15 @@ interface AuthContextType {
   getCurrentUser: () => Promise<void>;
 }
 
-const defaultAuthContext: AuthContextType = {
-  user: null,
-  loading: false,
-  isSignedIn: false,
-  signIn: async () => undefined,
-  signOut: async () => undefined,
-  signUp: async () => undefined,
-  getCurrentUser: async () => undefined,
-};
+// const defaultAuthContext: AuthContextType = {
+//   user: null,
+//   loading: false,
+//   isSignedIn: false,
+//   signIn: async () => undefined,
+//   signOut: async () => undefined,
+//   signUp: async () => undefined,
+//   getCurrentUser: async () => undefined,
+// };
 
 interface SignUpArg {
   email: string;
@@ -48,7 +48,7 @@ interface User {
 }
 
 // 認証用のContextを作成
-const AuthContext = createContext<AuthContextType>(defaultAuthContext);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 // 認証用のコンポーネント（ContextProvider）を作成
 // コンポーネントタグで囲んだ子コンポーネントを受け取れるようにする
@@ -185,8 +185,14 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
 };
 
 // Contextから認証valueを使用するための関数を定義
-export const useAuth = ():AuthContextType => {
-  return useContext(AuthContext);
+export const useAuth = () => {
+  //AuthContextがnullの場合、AuthContextのプロパティにアクセスができない可能性があるのでエラーが起きる。
+  //事前にnullかチェックする
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("AuthContextがnullです");
+  }
+  return context;
 };
 
 export default AuthProvider;
