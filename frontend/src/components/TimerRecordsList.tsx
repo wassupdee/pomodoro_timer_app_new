@@ -19,7 +19,7 @@ const TimerRecordsList = () => {
     fetchTimerRecords()
   },[]);
 
-  const fetchTimerRecords = async () => {
+  const fetchTimerRecords = async (): Promise<void> => {
 
     const config: AxiosRequestConfig = {
       headers: {
