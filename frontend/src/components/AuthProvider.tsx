@@ -12,16 +12,6 @@ interface AuthContextType {
   getCurrentUser: () => Promise<void>;
 }
 
-// const defaultAuthContext: AuthContextType = {
-//   user: null,
-//   loading: false,
-//   isSignedIn: false,
-//   signIn: async () => undefined,
-//   signOut: async () => undefined,
-//   signUp: async () => undefined,
-//   getCurrentUser: async () => undefined,
-// };
-
 interface SignUpArg {
   email: string;
   password: string;
