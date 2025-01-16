@@ -39,9 +39,9 @@ interface User {
   createdAt: string;
   email: string;
   id: number;
-  image: string | null;
-  name: string | null;
-  nickname: string | null;
+  image?: string;
+  name?: string;
+  nickname?: string;
   provider: string;
   uid: string;
   updatedAt: string;
