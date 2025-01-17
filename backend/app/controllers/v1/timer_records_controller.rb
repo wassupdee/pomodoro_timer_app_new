@@ -16,7 +16,7 @@ class V1::TimerRecordsController < ApplicationController
         render json: { message: '計測時間レコードの更新に失敗しました', errors: @today_timer_record.errors.full_messages }
       end
     else
-      new_timer_record = current_v1_user.timer_records.new(timer_record_params.merge(recorded_date: today))
+      new_timer_record = current_v1_user.timer_records.new(timer_record_params.merge(recorded_date: Time.zone.today))
       if new_timer_record.save
         render json: { message: '新しい計測時間レコードが保存されました' }
       else

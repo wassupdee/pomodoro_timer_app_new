@@ -4,7 +4,6 @@ import Countdown from './Countdown';
 import { useAuth } from "./AuthProvider";
 import SignOut from "./SignOut";
 
-
 const Home = () => {
   const { isSignedIn, getCurrentUser } = useAuth();
 

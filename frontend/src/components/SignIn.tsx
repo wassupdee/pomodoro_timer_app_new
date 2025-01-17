@@ -5,13 +5,13 @@ import { useAuth } from "./AuthProvider";
 // サインインページを担当する（サインイン機能はAuthProviderから受けとる）
 export const SignIn = () => {
   const { signIn } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
-  const handleSignInSubmit = async (e) => {
+  const handleSignInSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signIn(email, password);
+    const success: boolean | void = await signIn({ email, password });
 
     // この時点ではまだ、user stateはnullのまま
 
@@ -25,7 +25,7 @@ export const SignIn = () => {
   return (
     <>
       <p>サインインページです</p>
-      <form>
+      <form onSubmit={handleSignInSubmit}>
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input
@@ -46,7 +46,7 @@ export const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={(e) => handleSignInSubmit(e)}>
+        <button type="submit">
           Submit
         </button>
       </form>

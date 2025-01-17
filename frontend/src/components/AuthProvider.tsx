@@ -1,20 +1,54 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import Cookies from "js-cookie";
 import client from "../api/apiClient";
 
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  isSignedIn: boolean;
+  signUp: (args: SignUpArg) => Promise<boolean | void>;
+  signIn: (args: SignInArg) => Promise<boolean | void>;
+  signOut: () => Promise<boolean | void>;
+  getCurrentUser: () => Promise<void>;
+}
+
+interface SignUpArg {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  confirmSuccessUrl: string;
+}
+
+interface SignInArg {
+  email: string;
+  password: string;
+}
+
+interface User {
+  allowPasswordChange: boolean;
+  createdAt: string;
+  email: string;
+  id: number;
+  image?: string;
+  name?: string;
+  nickname?: string;
+  provider: string;
+  uid: string;
+  updatedAt: string;
+}
+
 // 認証用のContextを作成
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType | null>(null);
 
 // 認証用のコンポーネント（ContextProvider）を作成
 // コンポーネントタグで囲んだ子コンポーネントを受け取れるようにする
-const AuthProvider = ( {children} ) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  // const [currentUser, setCurrentUser] = useState();
+const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
+  const [user, setUser] = useState<AuthContextType["user"]>(null);
+  const [loading, setLoading] = useState<AuthContextType["loading"]>(false);
+  const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
   // サインアップ機能
-  const signUp = async (email, password, passwordConfirmation, confirmSuccessUrl) => {
+  const signUp: AuthContextType["signUp"] = async ({email, password, passwordConfirmation, confirmSuccessUrl}) => {
     const params = {
       email,
       password,
@@ -26,7 +60,7 @@ const AuthProvider = ( {children} ) => {
     try {
       const res = await client.post("v1/auth", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_access_token", res.headers["accessToken"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
 
@@ -45,7 +79,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // サインイン機能
-  const signIn = async (email, password) => {
+  const signIn: AuthContextType["signIn"] = async ({email, password}) => {
     const params = {
       email,
       password,
@@ -55,7 +89,7 @@ const AuthProvider = ( {children} ) => {
     try {
       const res = await client.post("v1/auth/sign_in", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_access_token", res.headers["accessToken"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
 
@@ -72,7 +106,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // サインアウト機能
-  const signOut = async () => {
+  const signOut: AuthContextType["signOut"] = async () => {
     setLoading(true);
 
     try {
@@ -89,7 +123,7 @@ const AuthProvider = ( {children} ) => {
 
       if (res.status === 200) {
         setIsSignedIn(false);
-        setUser("");
+        setUser(null);
         return true;
       }
     } catch (e) {
@@ -101,7 +135,7 @@ const AuthProvider = ( {children} ) => {
   };
 
   // ログインユーザーの取得
-  const getCurrentUser = async () => {
+  const getCurrentUser: AuthContextType["getCurrentUser"] = async () => {
     setLoading(true);
 
     if (
@@ -142,7 +176,13 @@ const AuthProvider = ( {children} ) => {
 
 // Contextから認証valueを使用するための関数を定義
 export const useAuth = () => {
-  return useContext(AuthContext);
+  //AuthContextがnullの場合、AuthContextのプロパティにアクセスができない可能性があるのでエラーが起きる。
+  //事前にnullかチェックする
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("AuthContextがnullです");
+  }
+  return context;
 };
 
 export default AuthProvider;

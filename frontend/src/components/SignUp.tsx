@@ -5,14 +5,14 @@ import { useAuth } from "./AuthProvider";
 // サインインページを担当する（サインイン機能はAuthProviderから受けとる）
 export const SignUp = () => {
   const { signUp } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const confirmSuccessUrl = "http://localhost:3001";
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
+  const confirmSuccessUrl: string = "http://localhost:3001";
 
-  const handleSignUpSubmit = async (e) => {
+  const handleSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const success = await signUp(email, password, passwordConfirmation, confirmSuccessUrl);
+    const success: boolean | void = await signUp({ email, password, passwordConfirmation, confirmSuccessUrl });
 
     if (success) {
       console.log("ユーザー仮登録 success");
@@ -22,7 +22,7 @@ export const SignUp = () => {
   return (
     <>
       <h1>サインアップページです</h1>
-      <form>
+      <form onSubmit={handleSignUpSubmit}>
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input
@@ -30,7 +30,7 @@ export const SignUp = () => {
             id="email"
             name="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -40,7 +40,7 @@ export const SignUp = () => {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           />
         </div>
         <div>
@@ -50,7 +50,7 @@ export const SignUp = () => {
             id="password_confirmation"
             name="password_confirmation"
             value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirmation(e.target.value)}
           />
         </div>
         <div>
@@ -61,7 +61,7 @@ export const SignUp = () => {
             value={confirmSuccessUrl}
           />
         </div>
-        <button type="submit" onClick={(e) => handleSignUpSubmit(e)}>
+        <button type="submit">
           Submit
         </button>
       </form>
