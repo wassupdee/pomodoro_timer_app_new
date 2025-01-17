@@ -43,10 +43,19 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // 認証用のコンポーネント（ContextProvider）を作成
 // コンポーネントタグで囲んだ子コンポーネントを受け取れるようにする
 const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
+
+  //--------state--------
+  //認証後、APIから取得したユーザー情報を保持するstate
   const [user, setUser] = useState<AuthContextType["user"]>(null);
+
+  //API通信中の状態を保持するstate
   const [loading, setLoading] = useState<AuthContextType["loading"]>(false);
+
+  //サインイン状態を管理するstate
   const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
+
+  //--------認証機能--------
   // サインアップ機能
   const signUp: AuthContextType["signUp"] = async ({email, password, passwordConfirmation, confirmSuccessUrl}) => {
     const params = {
