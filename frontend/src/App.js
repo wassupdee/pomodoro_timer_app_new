@@ -2,7 +2,6 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthProvider from './components/AuthProvider';
 import SignIn from './components/SignIn';
-import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import TimerRecordsList from './components/TimerRecordsList';
