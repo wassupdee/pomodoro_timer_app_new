@@ -27,6 +27,7 @@ const saveTimerRecord = async (workTimeElapsedMs: number, restTimeElapsedMs: num
     }
   } catch (e) {
     console.log(e);
+    alert("経過時間の記録に失敗しました。ログイン済みか確認ください")
   }
 };
 
