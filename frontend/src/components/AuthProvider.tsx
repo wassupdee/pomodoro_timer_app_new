@@ -174,6 +174,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       return;
 
     try {
+      //Cookieに認証情報があればログイン済みとすることもできるが、user情報はCookieに保存していないため、API通信を行う
       const res = await client.get("v1/auth/sessions", {
         headers: setAuthToHeadersFromCookies(),
       });
@@ -182,6 +183,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setUser(res?.data.data);
         console.log("ログインユーザー情報を取得しました",res?.data.data);
       } else {
+        //未ログインユーザーに対してはUIの出し分けやリダイレクトをするため、alertは表示しない
         setIsSignedIn(false);
         console.log(res?.data.data);
         console.log("ログインユーザー情報を取得できませんでした");
