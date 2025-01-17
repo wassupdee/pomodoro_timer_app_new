@@ -13,10 +13,6 @@ export const SignUp = () => {
   const handleSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const success: boolean | void = await signUp({ email, password, passwordConfirmation, confirmSuccessUrl });
-
-    if (success) {
-      console.log("ユーザー仮登録 success");
-    };
   };
 
   return (

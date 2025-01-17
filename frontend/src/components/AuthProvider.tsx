@@ -87,8 +87,9 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setAuthToCookiesFromHeaders(res.headers)
         setIsSignedIn(true);
         setUser(res.data.data);
-        alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください")
-        alert("サインアップ後は、サインインをしてください")
+        alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください");
+        alert("サインアップ後は、サインインをしてください");
+        console.log("サインアップに成功しました（メール認証は未実施")
         return true;
       }
     } catch (e) {
@@ -113,6 +114,8 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setAuthToCookiesFromHeaders(res.headers)
         setIsSignedIn(true);
         setUser(res.data.data);
+        alert("サインインしました");
+        console.log("サインインに成功しました", res.data.data);
         return true;
       }
     } catch (e) {
@@ -128,9 +131,6 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     setLoading(true);
 
     try {
-      console.log(Cookies.get("_access_token"));
-      console.log(Cookies.get("_client"),);
-      console.log(Cookies.get("_uid"));
       const res = await client.delete("v1/auth/sign_out", {
         headers: setAuthToHeadersFromCookies(),
       });
@@ -138,6 +138,8 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       if (res.status === 200) {
         setIsSignedIn(false);
         setUser(null);
+        alert("サインアウトしました");
+        console.log("サインアウトに成功しました")
         return true;
       }
     } catch (e) {
@@ -166,10 +168,10 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
         setUser(res?.data.data);
-        console.log(res?.data.data);
+        console.log("ログインユーザー情報を取得しました",res?.data.data);
       } else {
         console.log(res?.data.data);
-        console.log("no current user");
+        console.log("ログインユーザー情報を取得できませんでした");
       }
     } catch (e) {
       console.log(e);

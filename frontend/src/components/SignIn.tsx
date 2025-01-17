@@ -16,8 +16,6 @@ export const SignIn = () => {
     // この時点ではまだ、user stateはnullのまま
 
     if (success) {
-      console.log("Sign-in success");
-      alert("サインインしました")
       navigate("/");
     }
   };
