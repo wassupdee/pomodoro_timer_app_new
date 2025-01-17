@@ -5,7 +5,6 @@ import { AxiosResponseHeaders, RawAxiosResponseHeaders } from 'axios';
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
   isSignedIn: boolean;
   hasFetched: boolean;
   signUp: (args: SignUpArg) => Promise<boolean | void>;
@@ -56,9 +55,6 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   //認証後、APIから取得したユーザー情報を保持するstate
   const [user, setUser] = useState<AuthContextType["user"]>(null);
 
-  //API通信中の状態を保持するstate
-  const [loading, setLoading] = useState<AuthContextType["loading"]>(true);
-
   //サインイン状態を管理するstate
   const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
@@ -95,7 +91,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       passwordConfirmation,
       confirmSuccessUrl,
     };
-    setLoading(true);
+    setHasFetched(false);
 
     try {
       const res = await client.post("v1/auth", params);
@@ -111,7 +107,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       alert("サインアップに失敗しました")
       console.log(e);
     } finally {
-      setLoading(false);
+      setHasFetched(true);
     }
   };
 
@@ -121,7 +117,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       email,
       password,
     };
-    setLoading(true);
+    setHasFetched(false);
 
     try {
       const res = await client.post("v1/auth/sign_in", params);
@@ -137,13 +133,13 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       alert("サインインに失敗しました")
       console.log(e);
     } finally {
-      setLoading(false);
+      setHasFetched(true);
     }
   };
 
   // サインアウト機能
   const signOut: AuthContextType["signOut"] = async () => {
-    setLoading(true);
+    setHasFetched(false);
 
     try {
       const res = await client.delete("v1/auth/sign_out", {
@@ -162,13 +158,13 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       alert("サインアウトに失敗しました")
       console.log(e);
     } finally {
-      setLoading(false);
+      setHasFetched(true);
     }
   };
 
   // ログインユーザーの取得
   const getCurrentUser: AuthContextType["getCurrentUser"] = async () => {
-    setLoading(true);
+    setHasFetched(false);
 
     if (
       !Cookies.get("_access_token") ||
@@ -202,7 +198,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   },[]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, hasFetched, signIn, signOut, signUp, getCurrentUser }}>
+    <AuthContext.Provider value={{ user, isSignedIn, hasFetched, signIn, signOut, signUp, getCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );
