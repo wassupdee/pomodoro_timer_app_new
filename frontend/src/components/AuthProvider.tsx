@@ -182,6 +182,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setUser(res?.data.data);
         console.log("ログインユーザー情報を取得しました",res?.data.data);
       } else {
+        setIsSignedIn(false);
         console.log(res?.data.data);
         console.log("ログインユーザー情報を取得できませんでした");
       }
