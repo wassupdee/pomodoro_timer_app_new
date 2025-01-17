@@ -101,7 +101,6 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       const res = await client.post("v1/auth", params);
       if (res.status === 200) {
         setAuthToCookiesFromHeaders(res.headers)
-        setIsSignedIn(true);
         setUser(res.data.data);
         alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください");
         alert("サインアップ後は、サインインをしてください");
@@ -196,6 +195,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     setHasFetched(true);
   };
 
+  // 初回レンダリング（ページ更新時を想定）で、ユーザー認証を実行する
   useEffect(() => {
     getCurrentUser();
     console.log("初回レンダリングで、AuthProviderからgetCurrentUserをuseEffectで実行")
