@@ -5,11 +5,9 @@ import { useAuth } from "./AuthProvider";
 import SignOut from "./SignOut";
 
 const Home = () => {
-  const { isSignedIn, getCurrentUser } = useAuth();
+  const { isSignedIn } = useAuth();
 
-  useEffect(() => {
-    getCurrentUser();
-  },[isSignedIn])
+  console.log("Homeコンポーネントがレンダリングされました")
 
   return (
     <>
