@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import Cookies from "js-cookie";
 import client from "../api/apiClient";
 
@@ -6,6 +6,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isSignedIn: boolean;
+  hasFetched: boolean;
   signUp: (args: SignUpArg) => Promise<boolean | void>;
   signIn: (args: SignInArg) => Promise<boolean | void>;
   signOut: () => Promise<boolean | void>;
@@ -49,11 +50,13 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   const [user, setUser] = useState<AuthContextType["user"]>(null);
 
   //API通信中の状態を保持するstate
-  const [loading, setLoading] = useState<AuthContextType["loading"]>(false);
+  const [loading, setLoading] = useState<AuthContextType["loading"]>(true);
 
   //サインイン状態を管理するstate
   const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
+  //APIとの通信完了を管理するstate
+  const [hasFetched, setHasFetched] = useState<AuthContextType["hasFetched"]>(false);
 
   //--------クッキー処理--------
   const setAuthToCookiesFromHeaders = (headers: any) => {
@@ -176,11 +179,16 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     } catch (e) {
       console.log(e);
     }
-    setLoading(false);
+    setHasFetched(true);
   };
 
+  useEffect(() => {
+    getCurrentUser();
+    console.log("初回レンダリングで、AuthProviderからgetCurrentUserをuseEffectで実行")
+  },[]);
+
   return (
-    <AuthContext.Provider value={{ user, loading, isSignedIn, signIn, signOut, signUp, getCurrentUser }}>
+    <AuthContext.Provider value={{ user, loading, isSignedIn, hasFetched, signIn, signOut, signUp, getCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );
