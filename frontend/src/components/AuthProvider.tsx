@@ -73,6 +73,12 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     };
   };
 
+  const clearAuthInCookies = () => {
+    Cookies.remove("_access_token");
+    Cookies.remove("_client");
+    Cookies.remove("_uid");
+  };
+
   //--------認証機能--------
   // サインアップ機能
   const signUp: AuthContextType["signUp"] = async ({email, password, passwordConfirmation, confirmSuccessUrl}) => {
@@ -141,6 +147,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       if (res.status === 200) {
         setIsSignedIn(false);
         setUser(null);
+        clearAuthInCookies();
         alert("サインアウトしました");
         console.log("サインアウトに成功しました")
         return true;
