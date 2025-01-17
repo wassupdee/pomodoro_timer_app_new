@@ -21,6 +21,7 @@ const Home = () => {
         <>
           <Link to="/signin">サインイン</Link>
           <Link to="/signup">サインアップ</Link>
+          <p>作業時間・休憩時間を記録するには、サインインをしてください</p>
         </>
       )}
     </>
