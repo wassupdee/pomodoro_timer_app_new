@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import Cookies from "js-cookie";
 import client from "../api/apiClient";
+import { AxiosResponseHeaders, RawAxiosResponseHeaders } from 'axios';
 
 interface AuthContextType {
   user: User | null;
@@ -38,6 +39,12 @@ interface User {
   updatedAt: string;
 }
 
+interface AuthHeaders {
+  "access-token"?: string;
+  client?: string;
+  uid?: string;
+}
+
 // 認証用のContextを作成
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -59,13 +66,13 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   const [hasFetched, setHasFetched] = useState<AuthContextType["hasFetched"]>(false);
 
   //--------クッキー処理--------
-  const setAuthToCookiesFromHeaders = (headers: any) => {
+  const setAuthToCookiesFromHeaders = (headers: AxiosResponseHeaders | RawAxiosResponseHeaders): void => {
     Cookies.set("_access_token", headers["accessToken"]);
     Cookies.set("_client", headers["client"]);
     Cookies.set("_uid", headers["uid"]);
   };
 
-  const setAuthToHeadersFromCookies = () => {
+  const setAuthToHeadersFromCookies = (): Partial<AuthHeaders> => {
     return {
       "access-token": Cookies.get("_access_token"),
       client: Cookies.get("_client"),
@@ -73,7 +80,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     };
   };
 
-  const clearAuthInCookies = () => {
+  const clearAuthInCookies = (): void => {
     Cookies.remove("_access_token");
     Cookies.remove("_client");
     Cookies.remove("_uid");
