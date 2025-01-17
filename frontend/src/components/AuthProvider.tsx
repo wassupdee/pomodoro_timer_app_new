@@ -55,6 +55,21 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   const [isSignedIn, setIsSignedIn] = useState<AuthContextType["isSignedIn"]>(false);
 
 
+  //--------クッキー処理--------
+  const setAuthToCookiesFromHeaders = (headers: any) => {
+    Cookies.set("_access_token", headers["accessToken"]);
+    Cookies.set("_client", headers["client"]);
+    Cookies.set("_uid", headers["uid"]);
+  };
+
+  const setAuthToHeadersFromCookies = () => {
+    return {
+      "access-token": Cookies.get("_access_token"),
+      client: Cookies.get("_client"),
+      uid: Cookies.get("_uid"),
+    };
+  };
+
   //--------認証機能--------
   // サインアップ機能
   const signUp: AuthContextType["signUp"] = async ({email, password, passwordConfirmation, confirmSuccessUrl}) => {
@@ -69,10 +84,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     try {
       const res = await client.post("v1/auth", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["accessToken"]);
-        Cookies.set("_client", res.headers["client"]);
-        Cookies.set("_uid", res.headers["uid"]);
-
+        setAuthToCookiesFromHeaders(res.headers)
         setIsSignedIn(true);
         setUser(res.data.data);
         alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください")
@@ -98,10 +110,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
     try {
       const res = await client.post("v1/auth/sign_in", params);
       if (res.status === 200) {
-        Cookies.set("_access_token", res.headers["accessToken"]);
-        Cookies.set("_client", res.headers["client"]);
-        Cookies.set("_uid", res.headers["uid"]);
-
+        setAuthToCookiesFromHeaders(res.headers)
         setIsSignedIn(true);
         setUser(res.data.data);
         return true;
@@ -123,11 +132,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       console.log(Cookies.get("_client"),);
       console.log(Cookies.get("_uid"));
       const res = await client.delete("v1/auth/sign_out", {
-        headers: {
-          "access-token": Cookies.get("_access_token"),
-          client: Cookies.get("_client"),
-          uid: Cookies.get("_uid"),
-        },
+        headers: setAuthToHeadersFromCookies(),
       });
 
       if (res.status === 200) {
@@ -156,11 +161,7 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
 
     try {
       const res = await client.get("v1/auth/sessions", {
-        headers: {
-          "access-token": Cookies.get("_access_token"),
-          client: Cookies.get("_client"),
-          uid: Cookies.get("_uid"),
-        },
+        headers: setAuthToHeadersFromCookies(),
       });
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
