@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
 
 const TimerRecordsList = () => {
+  console.log("TimerRecordsListコンポーネントがレンダリングされました")
 
   interface TimerRecord {
     id: string;

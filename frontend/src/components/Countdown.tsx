@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import saveTimerRecord from '../api/saveTimerRecord';
+import { useAuth } from "./AuthProvider";
 
 const Countdown = () => {
+  //----------認証----------
+  const { isSignedIn } = useAuth();
+
   //----------時間----------
   //作業時間25分、休憩時間5分とする
   const workTime: number = 10 * 1000;
@@ -104,7 +108,7 @@ const Countdown = () => {
     }
     setIsCountingDown(false);
 
-    saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
+    isSignedIn && saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
     resetTimeElapsedMs();
   };
 
@@ -118,7 +122,7 @@ const Countdown = () => {
     setIsCountingDown(false);
     setCountdownMode(MODES.INACTIVE);
 
-    saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
+    isSignedIn && saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
     resetTimeElapsedMs();
   };
 
@@ -145,6 +149,8 @@ const Countdown = () => {
 
   //----------APIに経過時間を送信する----------
   useEffect(()=>{
+    if (isSignedIn === false) return;
+
     if (remainingTimeMs % (60 * 1000) === 0){
       saveTimerRecord(workTimeElapsedMs, restTimeElapsedMs);
       resetTimeElapsedMs();

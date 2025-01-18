@@ -8,15 +8,11 @@ export const SignUp = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-  const confirmSuccessUrl: string = "http://localhost:3001";
+  const confirmSuccessUrl: string | undefined = process.env.REACT_APP_FRONT_SIGN_IN_URL;
 
   const handleSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const success: boolean | void = await signUp({ email, password, passwordConfirmation, confirmSuccessUrl });
-
-    if (success) {
-      console.log("ユーザー仮登録 success");
-    };
   };
 
   return (

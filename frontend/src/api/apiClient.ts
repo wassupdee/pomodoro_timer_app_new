@@ -4,7 +4,7 @@ import axios, { AxiosInstance } from 'axios';
 // API通信を行うためのクライアント設定
 const client: AxiosInstance = applyCaseMiddleware(
     axios.create({
-        baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000',
+        baseURL: process.env.REACT_APP_BACK_BASE_URL,
     }),
 );
 

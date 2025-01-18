@@ -33,8 +33,7 @@ module Backend
     config.middleware.use ActionDispatch::Flash
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        # ローカルではReactのポートを3001とする。Reactのリクエストを許可するためにlocalhost:3001を設定
-        origins 'localhost:3001'
+        origins ENV.fetch("CORS_ALLOWED_ORIGINS")
         resource '*',
                  :headers => :any,
                  # リクエストヘッダーの'access-token'、'uid'、'client'を用いてログイン状態を維持する。

@@ -11,8 +11,6 @@ export const SignOut = () => {
     const success: boolean | void = await signOut();
 
     if (success) {
-      console.log("Sign-out success");
-      alert("サインアウトしました")
       navigate("/");
     };
   };
