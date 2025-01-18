@@ -24,11 +24,11 @@ export const SignIn = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-3xl text-center">サインインページです</h1>
+      <h1 className="text-3xl text-center">サインインページ</h1>
       <form onSubmit={handleSignInSubmit} className="flex flex-col items-center mt-10">
         <div className="flex flex-col mb-2">
           <div>
-            <label htmlFor="email" className="">メールアドレス</label>
+            <label htmlFor="email">メールアドレス</label>
           </div>
           <div>
             <input
@@ -55,7 +55,7 @@ export const SignIn = () => {
           </div>
         </div>
         <button type="submit" className="text-white bg-gray-900 rounded-lg p-2">
-          登録
+          サインイン
         </button>
       </form>
       <Link to="/signup" className="font-medium text-blue-600 dark:text-blue-500 underline space-x-4 text-lg text-center mt-10">サインアップへ</Link>
