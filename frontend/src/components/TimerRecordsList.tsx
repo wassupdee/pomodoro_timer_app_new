@@ -51,7 +51,7 @@ const TimerRecordsList = () => {
   const formatDateToJapanese = (dateString: string): string => {
     // 文字列をDateオブジェクトに変換
     const date: Date = new Date(dateString);
-    const year: number = date.getFullYear();
+    const year: number = Number(date.getFullYear().toString().slice(-2));
     // 0から始まるので+1をする
     const month: number = date.getMonth() + 1;
     const day: number = date.getDate();
