@@ -8,8 +8,8 @@ const Countdown = () => {
 
   //----------時間----------
   //作業時間25分、休憩時間5分とする
-  const workTime: number = 10 * 1000;
-  const restTime: number = 6 * 1000;
+  const workTime: number = 25 * 60 * 1000;
+  const restTime: number = 5 * 60 * 1000;
 
   //残り時間を保持する変数
   const [remainingTimeMs, setRemainingTimeMs] = useState<number>(workTime);
