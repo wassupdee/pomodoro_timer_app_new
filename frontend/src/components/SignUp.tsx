@@ -16,53 +16,64 @@ export const SignUp = () => {
   };
 
   return (
-    <>
-      <h1>サインアップページです</h1>
-      <form onSubmit={handleSignUpSubmit}>
-        <div>
-          <label htmlFor="email">メールアドレス</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-          />
+    <div className="flex flex-col">
+      <h1 className="text-3xl text-center">サインアップページ</h1>
+      <form onSubmit={handleSignUpSubmit} className="flex flex-col items-center mt-10">
+        <div className="flex flex-col mb-2">
+          <div>
+            <label htmlFor="email">メールアドレス</label>
+          </div>
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+              className="border border-black rounded"
+            />
+          </div>
+          <div>
+            <label htmlFor="password">パスワード</label>
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              className="border border-black rounded"
+            />
+          </div>
+          <div>
+            <label htmlFor="password_confirmation">パスワード確認</label>
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password_confirmation"
+              name="password_confirmation"
+              value={passwordConfirmation}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirmation(e.target.value)}
+              className="border border-black rounded"
+            />
+          </div>
+          <div>
+            <input
+              type="hidden"
+              id="confirm_success_url"
+              name="confirm_success_url"
+              value={confirmSuccessUrl}
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">パスワード</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password_confirmation">パスワード確認</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            name="password_confirmation"
-            value={passwordConfirmation}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirmation(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="hidden"
-            id="confirm_success_url"
-            name="confirm_success_url"
-            value={confirmSuccessUrl}
-          />
-        </div>
-        <button type="submit">
-          Submit
+        <button type="submit" className="text-white bg-gray-900 rounded-lg p-2">
+          登録
         </button>
       </form>
-      <Link to="/signin">サインインへ</Link>
-    </>
+      <Link to="/signin" className="font-medium text-blue-600 dark:text-blue-500 underline space-x-4 text-lg text-center mt-10">サインインへ</Link>
+    </div>
   );
 };
 

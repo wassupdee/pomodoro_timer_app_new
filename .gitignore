@@ -2,6 +2,7 @@
 
 ##frontend
 /frontend/node_modules
+/frontend/src/output.css
 
 ##backend
 # Ignore bundler config.

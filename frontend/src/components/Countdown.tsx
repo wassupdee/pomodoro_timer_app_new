@@ -8,8 +8,8 @@ const Countdown = () => {
 
   //----------時間----------
   //作業時間25分、休憩時間5分とする
-  const workTime: number = 10 * 1000;
-  const restTime: number = 6 * 1000;
+  const workTime: number = 25 * 60 * 1000;
+  const restTime: number = 5 * 60 * 1000;
 
   //残り時間を保持する変数
   const [remainingTimeMs, setRemainingTimeMs] = useState<number>(workTime);
@@ -164,31 +164,39 @@ const Countdown = () => {
   const formattedSecs: string = remainingTimeSecs < 10 ? "0" + remainingTimeSecs : String(remainingTimeSecs);
 
   return (
-    <div className="Countdown">
-      <p>{ formattedMins } : { formattedSecs }</p>
-      <p>
+    <div>
+      <div className="min-h-[40px] text-2xl mt-10 mb-3 text-center">
         {countdownMode === MODES.WORK
           ? "作業中"
           : countdownMode === MODES.REST
           ? "休憩中"
           : null}
-      </p>
+      </div>
+      <div className="text-9xl">
+        { formattedMins } : { formattedSecs }
+      </div>
 
       {/* countdownModeがinactiveであれば、changeModeを実行し、startTimer関数を発火させる。
           workまたはrestであればすでにスタート済みなので、restart関数を発火させる（ただし、isCountingDownがtrueの時は非表示にする） */}
-      {
-        countdownMode === MODES.INACTIVE ? (
-          <button onClick={changeMode}>
-            スタート
+      <div className="mt-10 space-x-4 flex justify-center">
+        {
+          countdownMode === MODES.INACTIVE ? (
+            <button onClick={changeMode} className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-full px-5 py-2.5 text-center">
+              スタート
+            </button>
+          ) : (
+            <button onClick={restartTimer} hidden={ isCountingDown } className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-full px-5 py-2.5 text-center">
+              リスタート
+            </button>
+          )
+        }
+          <button onClick={stopTimer} className="text-white bg-red-700 hover:bg-red-800 rounded-full px-5 py-2.5 text-center">
+            ストップ
           </button>
-        ) : (
-          <button onClick={restartTimer} hidden={ isCountingDown }>
-            リスタート
+          <button onClick={resetTimer} className="text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-full px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700">
+            リセット
           </button>
-        )
-      }
-      <button onClick={stopTimer}>ストップ</button>
-      <button onClick={resetTimer}>リセット</button>
+      </div>
     </div>
   );
 };

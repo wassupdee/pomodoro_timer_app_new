@@ -23,35 +23,43 @@ export const SignIn = () => {
   };
 
   return (
-    <>
-      <p>サインインページです</p>
-      <form onSubmit={handleSignInSubmit}>
-        <div>
-          <label htmlFor="email">メールアドレス</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <div className="flex flex-col">
+      <h1 className="text-3xl text-center">サインインページ</h1>
+      <form onSubmit={handleSignInSubmit} className="flex flex-col items-center mt-10">
+        <div className="flex flex-col mb-2">
+          <div>
+            <label htmlFor="email">メールアドレス</label>
+          </div>
+          <div>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-black rounded"
+              />
+          </div>
+          <div>
+            <label htmlFor="password">パスワード</label>
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border border-black rounded"
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">パスワード</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">
-          Submit
+        <button type="submit" className="text-white bg-gray-900 rounded-lg p-2">
+          サインイン
         </button>
       </form>
-      <Link to="/signup">サインアップへ</Link>
-    </>
+      <Link to="/signup" className="font-medium text-blue-600 dark:text-blue-500 underline space-x-4 text-lg text-center mt-10">サインアップへ</Link>
+    </div>
   );
 };
 

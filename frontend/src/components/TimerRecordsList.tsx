@@ -51,7 +51,7 @@ const TimerRecordsList = () => {
   const formatDateToJapanese = (dateString: string): string => {
     // 文字列をDateオブジェクトに変換
     const date: Date = new Date(dateString);
-    const year: number = date.getFullYear();
+    const year: number = Number(date.getFullYear().toString().slice(-2));
     // 0から始まるので+1をする
     const month: number = date.getMonth() + 1;
     const day: number = date.getDate();
@@ -61,28 +61,37 @@ const TimerRecordsList = () => {
 
   return (
     <div>
+      <h1 className="text-3xl text-center">計測記録</h1>
       {timerRecords ? (
-        <>
+        <div className="flex flex-col items-center mt-10">
           <table>
             <thead>
               <tr>
-                <th>日付</th>
-                <th>作業時間（分）</th>
-                <th>休憩時間（分）</th>
+                <th className="border border-gray-900">日付</th>
+                <th className="border border-gray-900">作業時間</th>
+                <th className="border border-gray-900">休憩時間</th>
               </tr>
             </thead>
             <tbody>
               {timerRecords.map((timerRecord: TimerRecord) => (
                 <tr key={timerRecord.id}>
-                  <td>{formatDateToJapanese(timerRecord.recordedDate)}</td>
-                  <td>{Math.floor(Number(timerRecord.workTimeElapsedMs) / 1000 / 60)}分</td>
-                  <td>{Math.floor(Number(timerRecord.restTimeElapsedMs) / 1000 / 60)}分</td>
+                  <td className="border border-gray-900 text-center">
+                    {formatDateToJapanese(timerRecord.recordedDate)}
+                  </td>
+                  <td className="border border-gray-900 text-center">
+                      {`${Math.floor(Number(timerRecord.workTimeElapsedMs) / 1000 / 60)}分`}
+                  </td>
+                  <td className="border border-gray-900 text-center">
+                    {`${Math.floor(Number(timerRecord.restTimeElapsedMs) / 1000 / 60)}分`}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <Link to="/">ホーム</Link>
-        </>
+          <Link to="/" className="font-medium text-blue-600 dark:text-blue-500 underline space-x-4 text-lg text-center mt-10">
+            ホーム
+          </Link>
+        </div>
       ) : (
         ""
       )}
