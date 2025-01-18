@@ -17,7 +17,7 @@ interface SignUpArg {
   email: string;
   password: string;
   passwordConfirmation: string;
-  confirmSuccessUrl: string;
+  confirmSuccessUrl: string | undefined;
 }
 
 interface SignInArg {
