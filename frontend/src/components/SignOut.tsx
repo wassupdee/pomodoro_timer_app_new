@@ -16,13 +16,13 @@ export const SignOut = () => {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSignOutSubmit}>
-        <button type="submit">
-          サインアウト
+        <button type="submit" className="text-gray-900 bg-white border border-gray-900 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm p-2">
+          サインアウトする
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
