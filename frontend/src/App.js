@@ -8,7 +8,7 @@ import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
-    <div className="App">
+    <div className="flex justify-center items-center">
       <AuthProvider>
         <Router>
           <Routes>
