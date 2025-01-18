@@ -10,7 +10,7 @@ const Home = () => {
   console.log("Homeコンポーネントがレンダリングされました")
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center">
       <h1 className="text-3xl text-center">ポモドーロタイマー</h1>
       <Countdown />
       { isSignedIn ? (
