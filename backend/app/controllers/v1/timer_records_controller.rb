@@ -28,7 +28,7 @@ class V1::TimerRecordsController < ApplicationController
   private
 
   def timer_record_params
-    params.permit(:work_time_elapsed_ms, :rest_time_elapsed_ms)
+    params.require(:timer_record).permit(:work_time_elapsed_ms, :rest_time_elapsed_ms)
   end
 
   def merged_time_elapsed_ms(timer_record)

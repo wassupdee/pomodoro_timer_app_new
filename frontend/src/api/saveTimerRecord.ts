@@ -4,8 +4,10 @@ import { AxiosRequestConfig } from "axios";
 
 const saveTimerRecord = async (workTimeElapsedMs: number, restTimeElapsedMs: number): Promise<boolean | void> => {
   const params = {
-    workTimeElapsedMs,
-    restTimeElapsedMs,
+    timer_record: {
+      workTimeElapsedMs,
+      restTimeElapsedMs,
+    }
   };
 
   const config: AxiosRequestConfig = {
