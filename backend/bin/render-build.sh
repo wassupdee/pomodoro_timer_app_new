@@ -2,6 +2,8 @@
 # exit on error
 set -o errexit
 
+echo "Current working directory: $(pwd)"
+
 bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
