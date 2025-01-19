@@ -3,6 +3,7 @@
 set -o errexit
 
 echo "Current working directory: $(pwd)"
+cd "$(dirname "$0")/.."
 
 bundle install
 bundle exec rails assets:precompile
