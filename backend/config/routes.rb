@@ -14,4 +14,7 @@ Rails.application.routes.draw do
     post 'timer_records', to: 'timer_records#create_or_update'
     resources :timer_records, only: %i[index]
   end
+
+  # ルートパスを設定し、デプロイ時にエラーが起きるのを防ぐ
+  get "/", to: proc { [200, {}, ["API is running 🚀"]] }
 end

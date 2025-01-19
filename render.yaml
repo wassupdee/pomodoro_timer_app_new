@@ -9,7 +9,6 @@ services:
     name: mysite
     runtime: ruby
     plan: free
-    rootDir: backend
     buildCommand: "./bin/render-build.sh"
     # preDeployCommand: "bundle exec rails db:migrate" # preDeployCommand only available on paid instance types
     startCommand: "bundle exec rails server"
