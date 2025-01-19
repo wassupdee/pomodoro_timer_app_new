@@ -2,9 +2,6 @@
 # exit on error
 set -o errexit
 
-echo "Current working directory: $(pwd)"
-cd "$(dirname "$0")/.."
-
 bundle install
 # comment out due to API mode
 # bundle exec rails assets:precompile
