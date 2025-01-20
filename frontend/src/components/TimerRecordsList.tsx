@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { AxiosRequestConfig } from "axios";
 
 const TimerRecordsList = () => {
-  console.log("TimerRecordsListコンポーネントがレンダリングされました")
+  if (process.env.NODE_ENV === "development") {
+    console.log("TimerRecordsListコンポーネントがレンダリングされました")
+  }
 
   interface TimerRecord {
     id: string;
@@ -37,14 +39,20 @@ const TimerRecordsList = () => {
         config,
       );
       if (res.status === 200) {
-        console.log(res?.data.data);
+        if (process.env.NODE_ENV === "development") {
+          console.log(res?.data.data);
+        }
         setTimerRecords(res?.data.data)
       } else {
-        console.log(res?.data.data);
-        console.log("no current user");
+        if (process.env.NODE_ENV === "development") {
+          console.log(res?.data.data);
+          console.log("no current user");
+        }
       }
     } catch (e) {
-      console.log(e);
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
     }
   };
 

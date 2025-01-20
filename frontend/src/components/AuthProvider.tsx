@@ -100,12 +100,16 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setUser(res.data.data);
         alert("登録したメールアドレスに、認証メールを送りました。メール内の確認リンクをクリックしてください");
         alert("サインアップ後は、サインインをしてください");
-        console.log("サインアップに成功しました（メール認証は未実施")
+        if (process.env.NODE_ENV === "development") {
+          console.log("サインアップに成功しました（メール認証は未実施")
+        }
         return true;
       }
     } catch (e) {
       alert("サインアップに失敗しました")
-      console.log(e);
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
     } finally {
       setHasFetched(true);
     }
@@ -126,12 +130,16 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setIsSignedIn(true);
         setUser(res.data.data);
         alert("サインインしました");
-        console.log("サインインに成功しました", res.data.data);
+        if (process.env.NODE_ENV === "development") {
+          console.log("サインインに成功しました", res.data.data);
+        }
         return true;
       }
     } catch (e) {
       alert("サインインに失敗しました")
-      console.log(e);
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
     } finally {
       setHasFetched(true);
     }
@@ -151,12 +159,16 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
         setUser(null);
         clearAuthInCookies();
         alert("サインアウトしました");
-        console.log("サインアウトに成功しました")
+        if (process.env.NODE_ENV === "development") {
+          console.log("サインアウトに成功しました")
+        }
         return true;
       }
     } catch (e) {
       alert("サインアウトに失敗しました")
-      console.log(e);
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
     } finally {
       setHasFetched(true);
     }
@@ -181,15 +193,21 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
         setUser(res?.data.data);
-        console.log("ログインユーザー情報を取得しました",res?.data.data);
+        if (process.env.NODE_ENV === "development") {
+          console.log("ログインユーザー情報を取得しました",res?.data.data);
+        }
       } else {
         //未ログインユーザーに対してはUIの出し分けやリダイレクトをするため、alertは表示しない
         setIsSignedIn(false);
-        console.log(res?.data.data);
-        console.log("ログインユーザー情報を取得できませんでした");
+        if (process.env.NODE_ENV === "development") {
+          console.log(res?.data.data);
+          console.log("ログインユーザー情報を取得できませんでした");
+        }
       }
     } catch (e) {
-      console.log(e);
+      if (process.env.NODE_ENV === "development") {
+        console.log(e);
+      }
     }
     setHasFetched(true);
   };
@@ -197,7 +215,9 @@ const AuthProvider:React.FC<{ children: ReactNode}> = ( {children} ) => {
   // 初回レンダリング（ページ更新時を想定）で、ユーザー認証を実行する
   useEffect(() => {
     getCurrentUser();
-    console.log("初回レンダリングで、AuthProviderからgetCurrentUserをuseEffectで実行")
+    if (process.env.NODE_ENV === "development") {
+      console.log("初回レンダリングで、AuthProviderからgetCurrentUserをuseEffectで実行")
+    }
   },[]);
 
   return (
