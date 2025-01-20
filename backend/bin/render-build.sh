@@ -11,5 +11,5 @@ bundle install
 # perform database migrations in the build command.
 # Uncomment the following line:
 
-DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:reset
-# bundle exec rails db:migrate
+# DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:reset
+bundle exec rails db:migrate
