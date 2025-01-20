@@ -64,5 +64,5 @@ DeviseTokenAuth.setup do |config|
   # send email, set it to true. (This is a setting for compatibility)
   # config.send_confirmation_email = true
 
-  config.redirect_whitelist = ['https://pomodoro-timer-app-new.onrender.com']
+  config.redirect_whitelist = ['https://pomodoro-timer-app-new.onrender.com/signin']
 end
