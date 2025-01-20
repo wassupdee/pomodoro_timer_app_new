@@ -42,5 +42,7 @@ module Backend
       end
     end
     config.api_only = true
+
+    config.action_controller.raise_on_open_redirects = false
   end
 end
