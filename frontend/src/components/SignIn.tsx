@@ -4,8 +4,9 @@ import { useAuth } from "./AuthProvider";
 
 // サインインページを担当する（サインイン機能はAuthProviderから受けとる）
 export const SignIn = () => {
-  console.log("SignInコンポーネントがレンダリングされました")
-
+  if (process.env.NODE_ENV === "development") {
+    console.log("SignInコンポーネントがレンダリングされました")
+  }
   const { signIn } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

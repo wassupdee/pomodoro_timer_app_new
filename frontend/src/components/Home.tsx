@@ -5,8 +5,9 @@ import SignOut from "./SignOut";
 
 const Home = () => {
   const { isSignedIn } = useAuth();
-
-  console.log("Homeコンポーネントがレンダリングされました")
+  if (process.env.NODE_ENV === "development") {
+    console.log("Homeコンポーネントがレンダリングされました")
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">

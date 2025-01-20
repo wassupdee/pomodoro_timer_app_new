@@ -28,7 +28,9 @@ const saveTimerRecord = async (workTimeElapsedMs: number, restTimeElapsedMs: num
       return true;
     }
   } catch (e) {
-    console.log(e);
+    if (process.env.NODE_ENV === "development") {
+      console.log(e);
+    }
     alert("経過時間の記録に失敗しました。ログイン済みか確認ください")
   }
 };
