@@ -33,7 +33,7 @@ module Backend
     config.middleware.use ActionDispatch::Flash
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'https://pomodoro-timer-app-new.onrender.com'
+        origins ENV.fetch("CORS_ALLOWED_ORIGINS")
         resource '*',
                  :headers => :any,
                  # リクエストヘッダーの'access-token'、'uid'、'client'を用いてログイン状態を維持する。
